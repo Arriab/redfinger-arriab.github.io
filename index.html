@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arriab Store - Live Stock RF</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #f5f5f5;
+      text-align: center;
+      padding: 20px 10px;
+      border-bottom: 2px solid #ddd;
+    }
+    h1 {
+      margin: 0;
+      font-weight: bold;
+    }
+    .content {
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    .status, .product {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      background-color: #fafafa;
+    }
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      padding: 15px;
+      border-top: 1px solid #ddd;
+      margin-top: 30px;
+    }
+    .contact a {
+      color: #0078d7;
+      text-decoration: none;
+    }
+    .contact a:hover {
+      text-decoration: underline;
+    }
+    .edit-link {
+      display: inline-block;
+      margin-top: 20px;
+      background: #0078d7;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Arriab Store</h1>
+    <p>Stock Code Redfinger Android 12</p>
+  </header>
+
+  <div class="content">
+    <div class="product">
+      <h3>7 Day Access (<span id="stock7">0</span>)</h3>
+      <p>Harga: <span id="harga7">0</span></p>
+    </div>
+
+    <div class="product">
+      <h3>30 Day Access (<span id="stock30">0</span>)</h3>
+      <p>Harga: <span id="harga30">0</span></p>
+    </div>
+
+    <a class="edit-link" href="edit.html">Edit Stock</a>
+
+    <footer>
+      <div class="contact">
+        <p>📞 <b>WhatsApp:</b> <a href="https://wa.me/6289514710266">089514710266</a></p>
+        <p>📘 <a href="https://www.facebook.com/share/14yjqVssRz/">Facebook</a> | 📷 <a href="https://www.instagram.com/arriab_store?igsh=MXRpOHZzd3hodzdrZQ==">Instagram</a></p>
+      </div>
+      <p>© 2025 Arriab Store</p>
+    </footer>
+  </div>
+
+  <script>
+    // Ambil data dari localStorage
+    document.getElementById("stock7").innerText = localStorage.getItem("stock7") || "0";
+    document.getElementById("harga7").innerText = localStorage.getItem("harga7") || "0";
+    document.getElementById("stock30").innerText = localStorage.getItem("stock30") || "0";
+    document.getElementById("harga30").innerText = localStorage.getItem("harga30") || "0";
+  </script>
+</body>
+  </html>
+    
