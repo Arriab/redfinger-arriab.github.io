@@ -42,6 +42,7 @@
             border-radius: 6px;
             font-size: 16px;
             font-weight: bold;
+            cursor: pointer;
         }
         a {
             display: block;
@@ -64,7 +65,7 @@
     </div>
     <div id="edit-form" style="display: none;">
         <label>Stock 7 Day</label>
-        <input type="number" id="stock7" placeholder="contoh: 5">
+        <input type="number" id="stock7" placeholder="contoh" placeholder="contoh: 5">
         <label>Harga 7 Day</label>
         <input type="text" id="harga7" placeholder="contoh: 20.5K">
         <label>Stock 30 Day</label>
@@ -75,7 +76,7 @@
     </div>
     <a href="index.html">⬅️ Kembali ke Halaman Utama</a>
     <script>
-        const username = "arriab";
+        const username = "Arriab";
         const password = "Abimanyu1234";
 
         function login() {
@@ -95,4 +96,9 @@
             localStorage.setItem("stock7", document.getElementById("stock7").value);
             localStorage.setItem("harga7", document.getElementById("harga7").value);
             localStorage.setItem("stock30", document.getElementById("stock30").value);
-            localStorage.setItem("harga30", document.get
+            localStorage.setItem("harga30", document.getElementById("harga30").value);
+            alert("Perubahan tersimpan!");
+        }
+    </script>
+</body>
+</html>
