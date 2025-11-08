@@ -1,93 +1,71 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Stock - Arriab Store</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #ffffff;
-      color: #222;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      font-weight: bold;
-    }
-    form {
-      max-width: 400px;
-      margin: auto;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    input {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      margin-top: 5px;
-    }
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 10px;
-      background-color: #0078d7;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      font-weight: bold;
-    }
-    a {
-      display: block;
-      text-align: center;
-      margin-top: 15px;
-      text-decoration: none;
-      color: #0078d7;
-      font-weight: bold;
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Arriab Store — Admin Edit</title>
 </head>
 <body>
-  <h1>Edit Stock</h1>
-  <form id="editForm">
-    <label>Stock 7 Day</label>
-    <input type="number" id="stock7" placeholder="contoh: 5">
+  <h1>Arriab Store — Admin Edit</h1>
+  <p>Halaman ini butuh password: Abimanyu1234</p>
+  <div id="editorArea" style="display:none"></div>  <script>
+    const ADMIN_PASSWORD = 'Abimanyu1234';
+    const DEFAULT_STOCK = [
+      {id:'A', name:'Redfinger Android 12 - 7 Day', qty: 7},
+      {id:'B', name:'Redfinger Android 12 - 30 Day', qty: 3}
+    ];
 
-    <label>Harga 7 Day</label>
-    <input type="text" id="harga7" placeholder="contoh: 20.5K">
-
-    <label>Stock 30 Day</label>
-    <input type="number" id="stock30" placeholder="contoh: 3">
-
-    <label>Harga 30 Day</label>
-    <input type="text" id="harga30" placeholder="contoh: 60K">
-
-    <button type="button" onclick="saveData()">Simpan Perubahan</button>
-  </form>
-
-  <a href="index.html">⬅️ Kembali ke Halaman Utama</a>
-
-  <script>
-    // Tampilkan nilai lama saat halaman dibuka
-    document.getElementById("stock7").value = localStorage.getItem("stock7") || "";
-    document.getElementById("harga7").value = localStorage.getItem("harga7") || "";
-    document.getElementById("stock30").value = localStorage.getItem("stock30") || "";
-    document.getElementById("harga30").value = localStorage.getItem("harga30") || "";
-
-    function saveData() {
-      localStorage.setItem("stock7", document.getElementById("stock7").value);
-      localStorage.setItem("harga7", document.getElementById("harga7").value);
-      localStorage.setItem("stock30", document.getElementById("stock30").value);
-      localStorage.setItem("harga30", document.getElementById("harga30").value);
-      alert("Perubahan tersimpan!");
+    function loadStock(){
+      try{ const raw = localStorage.getItem('arriab_stock'); if(!raw) return JSON.parse(JSON.stringify(DEFAULT_STOCK)); return JSON.parse(raw);}catch(e){return JSON.parse(JSON.stringify(DEFAULT_STOCK));}
     }
-  </script>
-</body>
-      </html>
-      
+
+    function saveStock(arr){ localStorage.setItem('arriab_stock',JSON.stringify(arr)); }
+
+    function requireAuth(){
+      const pw = prompt('Enter admin password:');
+      if(pw === ADMIN_PASSWORD){
+        document.getElementById('editorArea').style.display='block';
+        renderEditor();
+      } else { alert('Wrong password. Access denied.'); }
+    }
+
+    function renderEditor(){
+      const arr = loadStock();
+      const container = document.getElementById('editorArea');
+      container.innerHTML='';
+      arr.forEach((it,idx)=>{
+        const div = document.createElement('div');
+        div.innerHTML=`ID:${it.id} Name:<input data-idx='${idx}' data-field='name' value='${it.name}'> Qty:<input data-idx='${idx}' data-field='qty' type='number' value='${it.qty}'> <button data-idx='${idx}'>Remove</button>`;
+        container.appendChild(div);
+      });
+
+      container.querySelectorAll('input').forEach(inp=>{
+        inp.addEventListener('change',()=>{
+          const idx=Number(inp.dataset.idx),field=inp.dataset.field;
+          const arr2=loadStock();
+          arr2[idx][field]=(field==='qty'?Number(inp.value):inp.value);
+          saveStock(arr2);
+        });
+      });
+
+      container.querySelectorAll('button').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          const idx=Number(btn.dataset.idx);
+          const arr2=loadStock();
+          arr2.splice(idx,1);
+          saveStock(arr2);
+          renderEditor();
+        });
+      });
+
+      const addBtn=document.createElement('button'); addBtn.textContent='Add Item';
+      addBtn.addEventListener('click',()=>{
+        const arr2=loadStock(); arr2.push({id:Math.random().toString(36).slice(2,7).toUpperCase(),name:'New Item',qty:0}); saveStock(arr2); renderEditor();
+      });
+      container.appendChild(addBtn);
+    }
+
+    requireAuth();
+  </script></body>
+</html>
